@@ -13,12 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', \App\Http\Controllers\Main::class)->name('home');
 Route::get('/about', function () {
     return view('about');
-});
-Route::get('/news', function () {
-    return view('news');
-});
+})->name('about');
+Route::get('/news/{id?}', \App\Http\Controllers\News::class)->name('news');
+
