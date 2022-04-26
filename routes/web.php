@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', \App\Http\Controllers\Main::class)->name('home');
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
-//Route::get('/news/{id?}', \App\Http\Controllers\News::class)->name('news');
+Route::get('/', \App\Http\Controllers\MainController::class)->name('home');
+Route::get('/about', \App\Http\Controllers\AboutController::class)->name('about');
 Route::resource('news',\App\Http\Controllers\NewsController::class);

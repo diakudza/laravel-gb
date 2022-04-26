@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Main extends Controller
+class MainController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -14,8 +14,8 @@ class Main extends Controller
      */
     public function __invoke(Request $request, $id = null)
     {
-        $title = 'News';
+        $title = 'MainController';
 
-        return view('main', ['title' => 'news']);
+        return view('main', ['title' => $title]);
     }
 }

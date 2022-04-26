@@ -1,6 +1,7 @@
 
 @section('login')
-<form action="">
+<form action="" method="post">
+    @csrf
 <input type="text">
 <input type="text">
 <button>login</button>
