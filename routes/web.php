@@ -17,5 +17,5 @@ Route::get('/', \App\Http\Controllers\Main::class)->name('home');
 Route::get('/about', function () {
     return view('about');
 })->name('about');
-Route::get('/news/{id?}', \App\Http\Controllers\News::class)->name('news');
-
+//Route::get('/news/{id?}', \App\Http\Controllers\News::class)->name('news');
+Route::resource('news',\App\Http\Controllers\NewsController::class);

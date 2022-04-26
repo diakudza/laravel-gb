@@ -19,6 +19,7 @@ class News extends Controller
         $news = [
             '1' => ['title' => 'new 1',
                 'text' => 'text text texttexttextv texttetextxt',
+                'category' => '',
                 'date' => '12-12-2022'],
             '2' => ['title' => 'new 2',
                 'text' => 'text text texttexttextv texttetextxt',
