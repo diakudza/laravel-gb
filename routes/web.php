@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\MainController;
+use App\Http\Controllers\Admin\NewsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', \App\Http\Controllers\MainController::class)->name('home');
 Route::get('/about', \App\Http\Controllers\AboutController::class)->name('about');
 Route::resource('news',\App\Http\Controllers\NewsController::class);
+
+Route::group(['prefix' => 'admin'], function (){
+    Route::get('/',[MainController::class,'index'])->name('admin.main');
+    Route::resource('news', NewsController::class);
+});
