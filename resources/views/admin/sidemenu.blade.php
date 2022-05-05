@@ -7,7 +7,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href=" {{ route("admin.news.index") }}">
+                <a class="nav-link" href=" {{ route("new.index") }}">
                     <span data-feather="file"></span>
                     News
                 </a>

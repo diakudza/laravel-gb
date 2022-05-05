@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory\App\Models\User>
  */
-class UserFactory extends Factory
+class FeedbackFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,14 +18,11 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'phone' => $this->faker->unique()->phoneNumber(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
-        ];
-
+            'userId' => $this->faker->numerify("##"),
+            'text' => $this->faker->text("100"),
+            'like' => $this->faker->boolean,
+            'created_at' => $this->faker->date('d-m-Y'),
+            ];
     }
 
     /**
@@ -37,7 +34,10 @@ class UserFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'email_verified_at' => null,
+                'userid' => null,
+                'text' => null,
+                'like' => null,
+                'created_at' => null,
             ];
         });
     }

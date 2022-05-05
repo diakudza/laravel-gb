@@ -7,6 +7,6 @@
 @section('content')
 
     <h1>About</h1>
-    <p>About page</p>
+    <p> {{ $text }}</p>
 
 @endsection

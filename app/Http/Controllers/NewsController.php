@@ -3,19 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
     private $title = 'News';
+    private $news;
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->news = DB::table('news')->simplePaginate(15);
+    }
+
     public function index()
     {
-        return view('news', ['title' => $this->title, 'single' => 0, 'news' => $this->news, 'categories' => $this->categories]);
+        return view('news', ['title' => $this->title, 'news' => $this->news]);
     }
 
     /**
@@ -40,14 +48,11 @@ class NewsController extends Controller
     {
         //add news method
 
-        $news = [
-                'title' => $request->input('newstitle'),
-                'text' => $request->input('text'),
-                'date' => now()
-        ];
-        $this->news[] = $news;
+        $title = $request->input('newstitle');
+        $text = $request->input('text');
 
-        return view('news', ['title' => 'News', 'news' => $this->news, 'categories' => $this->categories]);
+        DB::table('news')->insert(['title' => $title, 'text' => $text, 'created_at' => now()]);
+        return view('news', ['title' => 'News', 'news' => $this->news]);
     }
 
     /**
@@ -58,9 +63,8 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        $news = $this->news[$id+1];
-
-        return view('news', ['title' =>'news viwer', 'single' => $news, 'news' => $this->news]);
+        $news = DB::table('news')->where('id', $id)->first();
+        return view('news', ['title' => 'news viewer', 'news' => $news]);
     }
 
     /**
@@ -96,10 +100,8 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        //erase news
-        var_dump(__METHOD__);
-        $this->news;
-        unset($this->news[$id]);
-        return view('news', ['title' => $this->title, 'single' => 0,'news' => $this->news, 'categories' => $this->categories]);
+        //delete news
+        DB::table('news')->where('id', $id)->delete();
+        return view('news', ['title' => $this->title, 'news' => $this->news]);
     }
 }
