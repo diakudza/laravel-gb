@@ -25,13 +25,14 @@
 </head>
 <body>
 @include('layouts.header')
-
+@include('layouts.modal')
 <main class="py-5 container">
+
     @include('layouts.errors')
     @yield('content')
 </main>
 
 @include('layouts.footer')
-<script src="{{ asset("bootstrap.bundle.min.js") }}" ></script>
+<script src="{{ asset("js/bootstrap.bundle.min.js") }}" ></script>
 </body>
 </html>

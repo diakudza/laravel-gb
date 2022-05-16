@@ -19,6 +19,7 @@ class MainController extends Controller
         $max = DB::table('news')->max('id');
         $min = DB::table('news')->min('id');;
         $randNews = DB::table('news')->where('id', rand($min, $max))->first();
-        return view('main', ['title' => $title, 'randNews' => $randNews]);
+        $lastFeedbacks = DB::table('feedbacks')->select('id', 'text')->orderByDesc('id')->limit('2')->get();
+        return view('main', ['title' => $title, 'randNews' => $randNews, 'lastFeedbacks' => $lastFeedbacks]);
     }
 }

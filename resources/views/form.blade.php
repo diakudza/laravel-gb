@@ -1,28 +1,26 @@
-@extends('layouts.base')
+@php
+    $inputTitle = $inputTitle ?? false;
+@endphp
 
-@section('title')
-    {{ $title }}
-@endsection
-
-@section('content')
-
-
-    <h1>News create</h1>
-    <form action="{{ route('news.store') }}" method="post">
-
-        @csrf
-        <div class="row g-3">
+<form
+    id="form"
+    class="align-self-center w-50 mt-2 visually-hidden"
+    action="{{ route($route) }}"
+    method="post"
+>
+    @csrf
+    <div class="row g-3">
+        @if($inputTitle)
         <div class="col-12">
             <label for="email" class="form-label">Title</label>
             <input type="text" class="form-control" id="title" name="newstitle" placeholder="title">
         </div>
+        @endif
         <div class="col-12">
             <label for="text" class="form-label">Text</label>
             <input type="text" class="form-control" id="text" name="text" placeholder="text">
         </div>
 
         <button type="submit" class="w-100 btn btn-primary btn-lg"> CREATE</button>
-        </div>
-    </form>
-
-@endsection
+    </div>
+</form>
