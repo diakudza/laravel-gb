@@ -5,40 +5,56 @@
 @endsection
 
 @section('content')
+    <div class="d-flex flex-column">
+        <div class="align-content-center d-flex flex-row justify-content-between">
+            <span class="fs-1">News page</span>
 
-<div>
-    <h1>News page</h1>
+            @auth
 
-    @foreach($news as $new => $val)
-        <a href="{{ route('news.show' ,['news' => $new]) }}" >{{ $new }}</a>
-    @endforeach
+                <button
+                    class="btn mb-lg-4 btn-success"
+                    onclick="document.querySelector('#form').classList.toggle('visually-hidden');
+                         document.querySelector('#div').classList.toggle('visually-hidden')"
+                >CREATE NEW
+                </button>
+        </div>
 
-    @if( !$single  )
+        @include('form',['inputTitle' => true, 'route' => 'news.store'] )
+        @endauth
+    </div>
+    @if( !property_exists($news, 'id'))
+        <br>
+        {{ $news->links()  }}
+        <br>
 
-        @foreach($news as $new=>$val)
-
-            @include('components.cart',['title' => $val['title'], 'text' => $val['text'], 'date' => $val['date'],])
-
-
+        @foreach($news as $new)
+            @include('components.cart',[$new])
             <br>
         @endforeach
-    @endif
-    @if( $single  )
-        <di>
-        <div class="card mb-4 rounded-3 shadow-sm">
-            <div class="card-header py-3">
-                <h4 class="my-0 fw-normal">Free</h4>
-            </div>
-            <div class="card-body">
-                <h1 class="card-title pricing-card-title">{{ $single['title'] }}</h1>
-                <ul class="list-unstyled mt-3 mb-4">
-                    <li>{{ $single['text'] }}</li>
-                    <li>{{ $single['date'] }}</li>
-                </ul>
+    @elseif ( property_exists($news, 'id') )
+        <div>
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">Free</h4>
+                </div>
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{ $news->title }}</h1>
+                    <ul class="list-unstyled mt-3 mb-4">
+                        <li>{{ $news->text }}</li>
+                        <li>{{ $news->created_at }}</li>
+                    </ul>
 
+                </div>
             </div>
-        </div>
-    @endif
-    <a href=" {{ route('news.create') }}" class="btn-success">CREATE NEW</a>
-</div>
+            @else
+                <div class="card-header py-3">
+                    <h4 class="my-0 fw-normal">Yet no news</h4>
+                </div>
+            @endif
+
+
+        </div><br>
+        {{ $news->links()  }}
+        <br>
+
 @endsection
