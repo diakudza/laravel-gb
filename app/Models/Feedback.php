@@ -17,4 +17,8 @@ class Feedback extends Model
         'created_at',
     ];
 
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class,'userId','id');
+    }
 }

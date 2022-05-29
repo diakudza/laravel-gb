@@ -2,7 +2,10 @@
 
 <div class="card mb-4 rounded-3 shadow-sm">
     <div class="card-header py-3 d-flex justify-content-sm-between">
-        <h3 class="my-0 fw-normal">{{ $new->title }}</h3>
+        <div>
+            <h3 class="my-0 fw-normal mb-3">{{ $new->title }}</h3>
+            <p>Cat.: {{$new->category->title }}</p>
+        </div>
         <p>{{ $new->created_at }}</p>
     </div>
     <div class="card-body">

@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('news', function (Blueprint $table){
-            $table->unsignedBigInteger('category_id')->default(1);
-            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
+        Schema::table('users', function (Blueprint $table) {
+            $table->tinyInteger('role')->default(0);
         });
     }
 
@@ -26,9 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('news', function (Blueprint $table) {
-            $table->dropForeign(['category_id']);
-            $table->dropColumn(['category_id']);
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['role']);
         });
     }
 };

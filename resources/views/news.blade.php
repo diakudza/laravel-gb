@@ -24,7 +24,7 @@
     </div>
     @if( !property_exists($news, 'id'))
         <br>
-        {{ $news->links()  }}
+        {{ $news->links() }}
         <br>
 
         @foreach($news as $new)

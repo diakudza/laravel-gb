@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
     private $title = 'News';
-    private $news;
 
     /**
      * Display a listing of the resource.
@@ -16,14 +16,9 @@ class NewsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function __construct()
+    public function index(News $news)
     {
-        $this->news = DB::table('news')->simplePaginate(15);
-    }
-
-    public function index()
-    {
-        return view('news', ['title' => $this->title, 'news' => $this->news]);
+        return view('news', ['title' => $this->title, 'news' => $news->simplePaginate(15)]);
     }
 
     /**
@@ -44,15 +39,17 @@ class NewsController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, News $news)
     {
-        //add news method
-
-        $title = $request->input('newstitle');
-        $text = $request->input('text');
-
-        DB::table('news')->insert(['title' => $title, 'text' => $text, 'created_at' => now()]);
-        return view('news', ['title' => 'News', 'news' => $this->news]);
+        $request->validate([
+            'title' => ['required', 'string', 'min:10'],
+            'text' => ['required', 'string', 'min:20'],
+        ]);
+        $validated = $request->except();
+        $news->created_at = now();
+        $news->fill($validated);
+        $news->save();
+        return view('news', ['title' => 'News', 'news' => $news->simplePaginate(15)]);
     }
 
     /**
@@ -61,10 +58,9 @@ class NewsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(News $news)
     {
-        $news = DB::table('news')->where('id', $id)->first();
-        return view('news', ['title' => 'news viewer', 'news' => $news]);
+        return view('news', ['title' => 'news viewer', 'news' => $news->simplePaginate(15)]);
     }
 
     /**
@@ -86,7 +82,7 @@ class NewsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, News $news)
     {
         //update single new
         var_dump(__METHOD__);
@@ -98,10 +94,9 @@ class NewsController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(News $news)
     {
-        //delete news
-        DB::table('news')->where('id', $id)->delete();
-        return view('news', ['title' => $this->title, 'news' => $this->news]);
+        $news->delete();
+        return view('news', ['title' => $this->title, 'news' => $news->simplePaginate(15)]);
     }
 }

@@ -14,10 +14,10 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Category $category)
     {
         $title ='Category edit';
-        return view('admin.categories',['title' => 'Admin category', 'categories' => Category::all() ]);
+        return view('admin.Categories.categories',['title' => 'Admin category', 'categories' => $category->all() ]);
     }
 
     /**
@@ -27,7 +27,7 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        $title ='Category edit';
+        $title ='Category create';
     }
 
     /**
@@ -36,9 +36,12 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Category $category)
     {
-        $title ='Category edit';
+        $request->validate(['title' => 'required|string|min:5']);
+        $category->fill($request->all());
+        $category->save();
+        return redirect(route('categories.index'))->with(['success'=>'Added']);
     }
 
     /**
@@ -47,10 +50,10 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $category)
     {
         $title ='Category edit';
-        return view('admin.categoryedit', ['categories' => Category::where(['id'=> $id])->first(), 'title' => $title]);
+        return view('admin.Categories.categoryedit', ['categories' => $category, 'title' => $title]);
     }
 
     /**
@@ -71,9 +74,11 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        Category::where('id', $id)->update(['title' => $request->title]);
+        $request->validate(['title' => 'required|string|min:5']);
+        $category->title = $request->input('title');
+        $category->save();
         return redirect(route('categories.index'))->with(['success'=>'Updated']);
     }
 
@@ -83,5 +88,13 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
+    public function destroy(Category $category)
+    {
+        if (count($category->news)) {
+            dd($category->news);
+            return redirect(route('categories.index'))->with(['alert' => "This category has news"]);
+        }
+        $category->deleteOrFail();
+        return redirect(route('categories.index'))->with(['success' => "Delete"]);
+    }
 }

@@ -17,7 +17,7 @@ class FeedbacksController extends Controller
     public function index()
     {
         $title ='Feedbacks edit';
-        return view('admin.feedbacks',['title' => 'Admin Feedbacks', 'feedback' => Feedback::all() ]);
+        return view('admin.Feedbacks.feedbacks',['title' => 'Admin Feedbacks', 'feedback' => Feedback::all() ]);
     }
 
     /**
@@ -50,7 +50,7 @@ class FeedbacksController extends Controller
     public function show($id)
     {
         $title ='Feedbacks edit';
-        return view('admin.feedbacksedit', ['feedback' => Feedback::where(['id'=> $id])->first(), 'title' => $title]);
+        return view('admin.Feedbacks.feedbacksedit', ['feedback' => Feedback::where(['id'=> $id])->first(), 'title' => $title]);
     }
 
     /**
