@@ -23,9 +23,9 @@
         @endauth
     </div>
     @if( !property_exists($news, 'id'))
-        <br>
-        {{ $news->links() }}
-        <br>
+        <div class="mt-2">
+            {{ $news->links()}}
+        </div>
 
         @foreach($news as $new)
             @include('components.cart',[$new])

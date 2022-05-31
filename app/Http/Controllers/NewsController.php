@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreNewsRequest;
 use App\Models\News;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
@@ -12,7 +12,6 @@ class NewsController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
 
@@ -36,17 +35,14 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param StoreNewsRequest $request
+     * @param News $news
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, News $news)
+    public function store(StoreNewsRequest $request, News $news)
     {
-        $request->validate([
-            'title' => ['required', 'string', 'min:10'],
-            'text' => ['required', 'string', 'min:20'],
-        ]);
-        $validated = $request->except();
-        $news->created_at = now();
+        $validated = $request->validated();
+        $validated['created_at'] = now();
         $news->fill($validated);
         $news->save();
         return view('news', ['title' => 'News', 'news' => $news->simplePaginate(15)]);
@@ -54,8 +50,6 @@ class NewsController extends Controller
 
     /**
      * Display the specified resource.
-     *
-     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show(News $news)
@@ -65,7 +59,6 @@ class NewsController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
      * @param int $id
      * @return \Illuminate\Http\Response
      */

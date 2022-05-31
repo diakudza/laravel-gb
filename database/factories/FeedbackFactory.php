@@ -18,7 +18,7 @@ class FeedbackFactory extends Factory
     public function definition()
     {
         return [
-            'userId' => $this->faker->numerify("##"),
+            'user_id' => $this->faker->numerify("##"),
             'text' => $this->faker->text("100"),
             'like' => $this->faker->boolean,
             'created_at' => $this->faker->date('d-m-Y'),
@@ -34,7 +34,7 @@ class FeedbackFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'userid' => null,
+                'user_id' => null,
                 'text' => null,
                 'like' => null,
                 'created_at' => null,

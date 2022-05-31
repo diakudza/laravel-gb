@@ -19,23 +19,25 @@
         @include('form',['route' => 'feedbackStore'] )
         @endauth
     </div>
-    {{ $feedbacks->links()}}
+    <div class="mt-2">
+        {{ $feedbacks->links()}}
+    </div>
+
     <div id="div" class="pt-2">
 
-            @foreach($feedbacks as $feedback)
-                <div>
-                    <div class="card mb-4 rounded-3 shadow-sm">
-                        <div class="card-header py-3">
-                            <h4 class="my-0 fw-normal">{{ $feedback->user->name }}</h4>
-                        </div>
-                        <div class="card-body d-flex ">
-                            <div>{{ $feedback->created_at }} :</div>
-                            <div> {{ $feedback->text  }}</div>
-                        </div>
+        @foreach($feedbacks as $feedback)
+            <div>
+                <div class="card mb-4 rounded-3 shadow-sm">
+                    <div class="card-header py-3">
+                        <h4 class="my-0 fw-normal">{{ $feedback->user->name }}</h4>
+                    </div>
+                    <div class="card-body d-flex ">
+                        <div>{{ $feedback->created_at }} :</div>
+                        <div> {{ $feedback->text  }}</div>
                     </div>
                 </div>
-                    @endforeach
-
+            </div>
+        @endforeach
 
 
     </div>

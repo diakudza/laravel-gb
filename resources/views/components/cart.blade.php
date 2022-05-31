@@ -11,13 +11,13 @@
     <div class="card-body">
         <p class="card-title pricing-card-title">{{ $new->text }}</p>
 
-        @auth()
+        @if(\Illuminate\Support\Facades\Auth::user()->role == 1)
             <form action="{{ route('news.destroy', ['news' => $new->id]) }}" method="post">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-sm btn-outline-secondary">DELETE</button>
             </form>
-        @endauth
+        @endif
     </div>
 
 </div>
