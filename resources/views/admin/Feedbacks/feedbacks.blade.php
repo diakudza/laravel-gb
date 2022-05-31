@@ -24,7 +24,8 @@
         <table>
         @foreach($feedback as $item)
             <tr>
-                <td>{{ $item['id'] }}</td><td>{{ $item['userId'] }}</td><td>{{ $item['title'] }}</td><td>{{ $item['text'] }}</td><td>{{ $item['created_at'] }}</td>
+
+                <td>{{ $item['id'] }}</td><td>{{ $item->user->name }}</td><td>{{ $item['title'] }}</td><td>{{ $item['text'] }}</td><td>{{ $item['created_at'] }}</td>
                 <td >
                     <div class="d-flex flex-row">
                     <a href="{{ route('feedbacks.show', ['feedback' => $item['id']]) }}" class="btn btn-success"><i class="bi bi-pen"></i></a>

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <!-- Bootstrap core CSS -->
     <link href=" {{ asset('css/bootstrap.min.css') }}" rel="stylesheet" crossorigin="anonymous">
+    <link href=" {{ asset('css/my.css') }}" rel="stylesheet">
     <meta name="theme-color" content="#7952b3">
     <style>
         .bd-placeholder-img {

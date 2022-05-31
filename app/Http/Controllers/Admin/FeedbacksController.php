@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UpdateFeedbacksRequest;
 use App\Models\Feedback;
 use App\Models\News;
 use Illuminate\Http\Request;
@@ -14,10 +15,10 @@ class FeedbacksController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Feedback $feedback)
     {
         $title ='Feedbacks edit';
-        return view('admin.Feedbacks.feedbacks',['title' => 'Admin Feedbacks', 'feedback' => Feedback::all() ]);
+        return view('admin.Feedbacks.feedbacks',['title' => 'Admin Feedbacks', 'feedback' => $feedback->all() ]);
     }
 
     /**
@@ -47,10 +48,10 @@ class FeedbacksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Feedback $feedback)
     {
         $title ='Feedbacks edit';
-        return view('admin.Feedbacks.feedbacksedit', ['feedback' => Feedback::where(['id'=> $id])->first(), 'title' => $title]);
+        return view('admin.Feedbacks.feedbacksedit', ['feedback' => $feedback, 'title' => $title]);
     }
 
     /**
@@ -59,7 +60,7 @@ class FeedbacksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Feedback $feedback)
     {
         $title ='Feedbacks edit';
     }
@@ -71,9 +72,13 @@ class FeedbacksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateFeedbacksRequest $request, Feedback $feedback)
     {
-        Feedback::where('id', $id)->update(['userId' => $request->userId, 'like' => ($request->like) ? true : false, 'text' => $request->text]);
+        $validated = $request->validated();
+        if(!$request->has('like')){
+            $validated['like'] = 0;
+        }
+        $feedback->update($validated);
         return redirect(route('feedbacks.index'))->with(['success'=>'Updated']);
     }
 
@@ -83,10 +88,9 @@ class FeedbacksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Feedback $feedback, int $id)
     {
-
-        Feedback::find($id)->delete();
+        $feedback->find($id)->delete();
         return redirect(route('feedbacks.index'))->with(['success' => "$id Delete"]);
     }
 }
