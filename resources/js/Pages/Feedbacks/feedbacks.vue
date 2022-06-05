@@ -9,11 +9,18 @@
             >CREATE NEW
             </button>
         </div>
-        <FeedbackFormAdd v-show="formShow"/>
+        <FeedbackFormAdd v-show="formShow" :user="$attrs.auth.user"/>
         <div class="mt-2">
             <Pagination :links="feedbacks.links" />
         </div>
-        <FeedbackCart @destroy="destroy" :news="feedbacks" :user="$attrs.auth.user"/>
+
+        <FeedbackCart v-for="item in feedbacks.data"
+                      :key="item.id"
+                      @destroy="destroy"
+                      @editFeedback="editFeedback"
+                      :feedback="item"
+                      :user="$attrs.auth.user"
+        />
 
     </div>
 </template>
@@ -40,10 +47,13 @@ export default {
         changeFormVisible() {
           this.formShow = !this.formShow
         },
-        destroy(id) {
+        destroy(id) {console.log(id)
              if (confirm('Are you sure ?')) {
-                // this.$inertia.delete(this.route('news.destroy', id))
+                this.$inertia.delete(this.route('feedbacksDestroy', id))
             }
+        },
+        editFeedback(e) {
+            this.$inertia.put(this.route('feedbacksUpdate', e.id),  {text: e.text  })
         }
     }
 }

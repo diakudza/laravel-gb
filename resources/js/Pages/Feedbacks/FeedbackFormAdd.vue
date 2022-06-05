@@ -22,6 +22,7 @@
             </div>
             <button type="submit" class="w-100 btn btn-primary btn-lg"> CREATE</button>
         </div>
+
     </form>
 </template>
 
@@ -33,17 +34,25 @@ export default {
         const form = useForm({
             title: null,
             text: null,
+            user_id: null,
+
         })
 
         function submit() {
-            this.$inertia.post(route('news.store', {_token: this.$page.props.csrf_token, title: form.title, text: form.text}))
+            alert(this.props.user_id)
+
+            this.$inertia.post(route('feedbacksStore', {_token: this.$page.props.csrf_token,
+                                                            title: form.title,
+                                                            text: form.text,
+                                                            user_id: this.props.user.id
+            }))
         }
 
         return { form, submit}
     },
-    props: {
-
-    },
+    props: [
+        'user'
+    ],
 
 }
 </script>

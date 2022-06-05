@@ -21,9 +21,8 @@ class NewsController extends Controller
         return Inertia::render('News/news',
             [
                 'title' => $this->title,
-                'news' => $news->paginate(15)
+                'news' => $news->with('Category')->paginate(15)
             ]);
-        //return view('news', ['title' => $this->title, 'news' => $news->paginate(15)]);
     }
 
     /**
@@ -52,7 +51,6 @@ class NewsController extends Controller
         $news->fill($validated);
         $news->save();
         return redirect()->back()->with('success', 'Added');
-//       /return view('news', ['title' => 'News', 'news' => $news->paginate(15)]);
     }
 
     /**
@@ -98,6 +96,5 @@ class NewsController extends Controller
     {
         $news->delete();
         return redirect()->back()->with('success', 'Deleted');
-       // return view('news', ['title' => $this->title, 'news' => $news->paginate(15)]);
     }
 }

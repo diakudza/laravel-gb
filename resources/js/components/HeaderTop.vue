@@ -15,6 +15,9 @@
                     <Link :href="route('about')" class="navbar-brand d-flex align-items-center">
                         <strong>About</strong>
                     </Link>
+                    <a v-if="user!== null && user.role === 1" href="/admin" class="navbar-brand d-flex align-items-center">
+                        <strong>admin_panel</strong>
+                    </a>
                 </div>
                 <div class="d-flex flex-row">
                     <div v-if="!user" class="d-flex flex-row ">
@@ -41,8 +44,8 @@
                         </form>
                     </div>
                     <div v-if="user">
-                        <Link :href="route('logout')" class="navbar-brand d-flex align-items-center">
-                            {{ user.name }}
+                        <Link :href="route('logout')" class="navbar-brand d-flex align-items-center">{{ user.name }}
+                            <img :src="user.avatar" class="rounded-2" height="40">
                         </Link>
                     </div>
 

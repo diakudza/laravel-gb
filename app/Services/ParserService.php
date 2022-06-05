@@ -20,14 +20,16 @@ class ParserService implements Contract\Parser
     public function parse()
     {
         $xml = simplexml_load_file($this->link);
-        $this->array = $xml->channel->item;
+        foreach ($xml->channel->item as $item) {
+            $this->array[] = $item;
+        }
         return $this;
     }
 
     public function saveInNewsTable()
     {
-        $news= new News;
         foreach ($this->array as $item) {
+            $news = new News;
             $news->title = $item->title;
             $news->text = $item->description;
             $news->link = $item->link;

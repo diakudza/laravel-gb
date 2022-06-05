@@ -35,7 +35,6 @@ export default {
           this.formShow = !this.formShow
         },
         destroy(id) {
-            console.log(id)
             if (confirm('Are you sure ?')) {
                 this.$inertia.delete(this.route('news.destroy', id))
             }

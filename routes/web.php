@@ -27,8 +27,12 @@ use App\Http\Controllers\FeedbackController;
 
 Route::get('/', MainController::class)->name('home');
 Route::get('/about', AboutController::class)->name('about');
+
 Route::get('/feedbacks', [FeedbackController::class, 'get'])->name('feedbacks');
 Route::post('/feedbacks', [FeedbackController::class, 'store'])->name('feedbacksStore');
+Route::put('/feedbacks/{feedback}', [FeedbackController::class, 'update'])->name('feedbacksUpdate');
+Route::delete('/feedbacks/{feedback}', [FeedbackController::class, 'destroy'])->name('feedbacksDestroy');
+
 Route::get('/login', [LoginController::class, 'form'])->name('loginform');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

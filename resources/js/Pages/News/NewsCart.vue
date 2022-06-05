@@ -3,7 +3,7 @@
         <div class="card-header py-3 d-flex justify-content-sm-between">
             <div>
                 <h3 class="my-0 fw-normal mb-3">{{ item.title }}</h3>
-                <p>Cat.: {{item.category }}</p>
+                <p>Cat.: {{item.category.title }}</p>
             </div>
             <p>{{ item.created_at }}</p>
         </div>
