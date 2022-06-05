@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreNewsRequest;
 use App\Models\News;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class NewsController extends Controller
 {
@@ -17,7 +18,12 @@ class NewsController extends Controller
 
     public function index(News $news)
     {
-        return view('news', ['title' => $this->title, 'news' => $news->simplePaginate(15)]);
+        return Inertia::render('News/news',
+            [
+                'title' => $this->title,
+                'news' => $news->paginate(15)
+            ]);
+        //return view('news', ['title' => $this->title, 'news' => $news->paginate(15)]);
     }
 
     /**
@@ -45,7 +51,8 @@ class NewsController extends Controller
         $validated['created_at'] = now();
         $news->fill($validated);
         $news->save();
-        return view('news', ['title' => 'News', 'news' => $news->simplePaginate(15)]);
+        return redirect()->back()->with('success', 'Added');
+//       /return view('news', ['title' => 'News', 'news' => $news->paginate(15)]);
     }
 
     /**
@@ -54,7 +61,7 @@ class NewsController extends Controller
      */
     public function show(News $news)
     {
-        return view('news', ['title' => 'news viewer', 'news' => $news->simplePaginate(15)]);
+        return view('news', ['title' => 'news viewer', 'news' => $news->paginate(15)]);
     }
 
     /**
@@ -90,6 +97,7 @@ class NewsController extends Controller
     public function destroy(News $news)
     {
         $news->delete();
-        return view('news', ['title' => $this->title, 'news' => $news->simplePaginate(15)]);
+        return redirect()->back()->with('success', 'Deleted');
+       // return view('news', ['title' => $this->title, 'news' => $news->paginate(15)]);
     }
 }
