@@ -12,7 +12,7 @@ class Feedback extends Model
     protected $table = 'feedbacks';
     protected $fillable = [
         'userId',
-        'test',
+        'text',
         'like',
         'created_at',
     ];

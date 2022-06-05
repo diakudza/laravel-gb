@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Feedback;
 use App\Models\News;
 use Illuminate\Http\Request;
 
-class NewsController extends Controller
+class FeedbacksController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $title ='News edit';
-        return view('admin.news',['title' => 'Admin news', 'news' => News::all() ]);
+        $title ='Feedbacks edit';
+        return view('admin.feedbacks',['title' => 'Admin Feedbacks', 'feedback' => Feedback::all() ]);
     }
 
     /**
@@ -26,7 +27,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $title ='News edit';
+        $title ='Feedbacks edit';
     }
 
     /**
@@ -37,7 +38,7 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $title ='News edit';
+        $title ='Feedbacks edit';
     }
 
     /**
@@ -48,8 +49,8 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        $title ='News edit';
-        return view('admin.newsedit', ['new' => News::where(['id'=> $id])->first(), 'title' => $title]);
+        $title ='Feedbacks edit';
+        return view('admin.feedbacksedit', ['feedback' => Feedback::where(['id'=> $id])->first(), 'title' => $title]);
     }
 
     /**
@@ -60,7 +61,7 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        $title ='News edit';
+        $title ='Feedbacks edit';
     }
 
     /**
@@ -72,8 +73,8 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        News::where('id', $id)->update(['title' => $request->title, 'text' => $request->text]);
-        return redirect(route('new.index'))->with(['success'=>'Updated']);
+        Feedback::where('id', $id)->update(['userId' => $request->userId, 'like' => ($request->like) ? true : false, 'text' => $request->text]);
+        return redirect(route('feedbacks.index'))->with(['success'=>'Updated']);
     }
 
     /**
@@ -84,7 +85,8 @@ class NewsController extends Controller
      */
     public function destroy($id)
     {
-        News::find($id)->delete();
-        return redirect(route('new.index'))->with(['success' => "$id Delete"]);
+
+        Feedback::find($id)->delete();
+        return redirect(route('feedbacks.index'))->with(['success' => "$id Delete"]);
     }
 }

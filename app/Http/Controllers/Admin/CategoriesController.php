@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
 
-class NewsController extends Controller
+class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,8 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $title ='News edit';
-        return view('admin.news',['title' => 'Admin news', 'news' => News::all() ]);
+        $title ='Category edit';
+        return view('admin.categories',['title' => 'Admin category', 'categories' => Category::all() ]);
     }
 
     /**
@@ -26,7 +27,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $title ='News edit';
+        $title ='Category edit';
     }
 
     /**
@@ -37,7 +38,7 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $title ='News edit';
+        $title ='Category edit';
     }
 
     /**
@@ -48,8 +49,8 @@ class NewsController extends Controller
      */
     public function show($id)
     {
-        $title ='News edit';
-        return view('admin.newsedit', ['new' => News::where(['id'=> $id])->first(), 'title' => $title]);
+        $title ='Category edit';
+        return view('admin.categoryedit', ['categories' => Category::where(['id'=> $id])->first(), 'title' => $title]);
     }
 
     /**
@@ -60,7 +61,7 @@ class NewsController extends Controller
      */
     public function edit($id)
     {
-        $title ='News edit';
+        $title ='Category edit';
     }
 
     /**
@@ -72,8 +73,8 @@ class NewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        News::where('id', $id)->update(['title' => $request->title, 'text' => $request->text]);
-        return redirect(route('new.index'))->with(['success'=>'Updated']);
+        Category::where('id', $id)->update(['title' => $request->title]);
+        return redirect(route('categories.index'))->with(['success'=>'Updated']);
     }
 
     /**
@@ -82,9 +83,5 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        News::find($id)->delete();
-        return redirect(route('new.index'))->with(['success' => "$id Delete"]);
-    }
+
 }

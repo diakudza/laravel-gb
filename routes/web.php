@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\FeedbacksController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\NewsController as AdmNewsController;
@@ -40,4 +42,6 @@ Route::group(['prefix' => 'admin'], function () {
             'store' => 'new.store',
             'create' => 'new.create',
         ]);
+    Route::resource('categories', CategoriesController::class);
+    Route::resource('feedbacks', FeedbacksController::class);
 });
