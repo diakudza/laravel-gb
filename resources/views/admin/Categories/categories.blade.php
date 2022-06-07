@@ -6,11 +6,14 @@
 
 @section('content')
     <div>
-        <div
-            class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Categories</h1>
-
+        </div>
+        <div class="p-1 d-flex justify-content-end">
+            <a class="btn btn-dark" href="{{route('categories.create')}}">ADD NEW</a>
+        </div>
+        <div class="mt-2">
+            {{ $categories->links()}}
         </div>
         <table>
             @foreach($categories as $item)

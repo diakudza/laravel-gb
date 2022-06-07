@@ -7,6 +7,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Faker\Factory;
+use Illuminate\Support\Facades\Hash;
 
 class CategoriesSeeder extends Seeder
 {
@@ -17,6 +18,10 @@ class CategoriesSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('categories')->insert([
+            'title' => 'do not set',
+        ]);
+
         DB::table('categories')->insert($this->getData());
     }
 

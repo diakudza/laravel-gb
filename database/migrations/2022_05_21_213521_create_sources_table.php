@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('sources', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('text');
+            $table->string('title')->nullable();
+            $table->text('text')->nullable();
+            $table->boolean('active')->default(true);
+            $table->integer('category_id')->default(1);
             $table->string('url');
             $table->timestamps();
         });

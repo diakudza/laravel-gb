@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class News extends Model
+class Source extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'text', 'category_id', 'user_id', 'link', 'source'];
+    protected $fillable = ['title', 'text', 'url', 'active', 'category_id'];
 
     public function category(): BelongsTo
     {

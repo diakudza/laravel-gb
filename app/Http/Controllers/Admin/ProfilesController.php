@@ -21,7 +21,7 @@ class ProfilesController extends Controller
     public function index(User $user)
     {
         $title = 'Profiles';
-        return view('admin.Profiles.profiles', ['title' => 'Profiles', 'profiles' => $user->all()]);
+        return view('admin.Profiles.profiles', ['title' => 'Profiles', 'profiles' => $user->paginate(15)]);
     }
 
     /**

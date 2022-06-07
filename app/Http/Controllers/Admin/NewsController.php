@@ -18,7 +18,7 @@ class NewsController extends Controller
     public function index(News $news)
     {
         $title ='News';
-        return view('admin.News.news',['title' => 'Admin news', 'news' => $news->all() ]);
+        return view('admin.News.news',['title' => 'Admin news', 'news' => $news->paginate(15), 'categories' => Category::all()]);
     }
 
     /**

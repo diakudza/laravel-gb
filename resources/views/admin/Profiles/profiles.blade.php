@@ -9,6 +9,9 @@
         <div class="p-1 d-flex justify-content-end">
             <a class="btn btn-dark" href="{{route('profiles.create')}}">Manual add user </a>
         </div>
+        <div class="mt-2">
+            {{ $profiles->links()}}
+        </div>
         <table class="table table-hover">
             <tr>
                 <th>id</th>

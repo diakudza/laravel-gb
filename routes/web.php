@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\FeedbacksController;
 use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Admin\ProfilesController;
+use App\Http\Controllers\Admin\SourceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SocialController;
@@ -46,6 +47,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isadmin'], function () {
     Route::resource('categories', CategoriesController::class);
     Route::resource('feedbacks', FeedbacksController::class);
     Route::resource('profiles', ProfilesController::class);
+    Route::resource('sources', SourceController::class);
     Route::resource('news', AdmNewsController::class)
         ->names([
             'index' => 'new.index',
@@ -54,7 +56,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isadmin'], function () {
             'store' => 'new.store',
             'create' => 'new.create',
         ]);
-    Route::post('/parse', [ParserController::class, 'index'])->name('parser');
+    Route::get('/parse', [ParserController::class, 'index'])->name('parser');
 });
 
 Route::get('/auth/{driver}/redirect', [SocialController::class, 'redirect'])

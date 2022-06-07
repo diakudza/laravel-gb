@@ -18,7 +18,7 @@ class FeedbacksController extends Controller
     public function index(Feedback $feedback)
     {
         $title ='Feedbacks edit';
-        return view('admin.Feedbacks.feedbacks',['title' => 'Admin Feedbacks', 'feedback' => $feedback->all() ]);
+        return view('admin.Feedbacks.feedbacks',['title' => 'Admin Feedbacks', 'feedback' => $feedback->paginate(15) ]);
     }
 
     /**
