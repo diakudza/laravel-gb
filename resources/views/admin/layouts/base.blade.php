@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard Template · Bootstrap v5.1</title>
+    <title></title>
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"  crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <link rel="icon" href="/docs/5.1/assets/img/favicons/favicon.ico">
     <meta name="theme-color" content="#7952b3">
 
@@ -38,7 +38,7 @@
     </button>
     <div class="navbar-nav">
         <div class="nav-item text-nowrap">
-            <a class="nav-link px-3" href="{{ route('logout') }}">Sign out</a>
+            <a class="nav-link px-3" href="{{ route('logout') }}">{{ \Illuminate\Support\Facades\Auth::user()->name }}</a>
         </div>
     </div>
 </header>
@@ -47,7 +47,7 @@
 <div class="container-fluid">
     <div class="row">
         <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-            @include('admin.sidemenu')
+            @include('admin.layouts.sidemenu')
         </nav>
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">

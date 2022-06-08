@@ -11,8 +11,8 @@ class News extends Model
 
     protected $fillable = ['title', 'text', 'category_id'];
 
-    public function category()
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(related: Category::class, foreignKey: 'category_id')->first();
+        return $this->belongsTo(Category::class);
     }
 }

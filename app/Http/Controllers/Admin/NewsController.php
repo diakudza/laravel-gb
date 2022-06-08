@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UpdateNewsRequest;
+use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
 
@@ -13,10 +15,10 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(News $news)
     {
-        $title ='News edit';
-        return view('admin.news',['title' => 'Admin news', 'news' => News::all() ]);
+        $title ='News';
+        return view('admin.News.news',['title' => 'Admin news', 'news' => $news->all() ]);
     }
 
     /**
@@ -26,7 +28,8 @@ class NewsController extends Controller
      */
     public function create()
     {
-        $title ='News edit';
+        $title ='News create';
+        return view('admin.News.newscreate',['title' => $title, 'categories' => Category::all()]);
     }
 
     /**
@@ -35,9 +38,12 @@ class NewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UpdateNewsRequest $request, News $news)
     {
-        $title ='News edit';
+        $request = $request->validated();
+        $news->fill($request);
+        $news->save();
+        return redirect(route('new.index'))->with(['success'=>'Added']);
     }
 
     /**
@@ -46,10 +52,10 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(News $news)
     {
         $title ='News edit';
-        return view('admin.newsedit', ['new' => News::where(['id'=> $id])->first(), 'title' => $title]);
+        return view('admin.News.newsedit', ['new' => $news, 'title' => $title, 'categories' => Category::all()]);
     }
 
     /**
@@ -70,9 +76,10 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateNewsRequest $request, News $news)
     {
-        News::where('id', $id)->update(['title' => $request->title, 'text' => $request->text]);
+        $news->fill($request->all());
+        $news->save();
         return redirect(route('new.index'))->with(['success'=>'Updated']);
     }
 
@@ -82,9 +89,9 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(News $news)
     {
-        News::find($id)->delete();
-        return redirect(route('new.index'))->with(['success' => "$id Delete"]);
+        $news->delete();
+        return redirect(route('new.index'))->with(['success' => "Delete"]);
     }
 }

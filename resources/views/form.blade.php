@@ -20,7 +20,7 @@
             <label for="text" class="form-label">Text</label>
             <input type="text" class="form-control" id="text" name="text" placeholder="text">
         </div>
-
+        <input type="hidden" name="user_id" value="{{ \Illuminate\Support\Facades\Auth::user()->id }}">
         <button type="submit" class="w-100 btn btn-primary btn-lg"> CREATE</button>
     </div>
 </form>

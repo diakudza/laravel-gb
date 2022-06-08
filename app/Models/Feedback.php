@@ -11,10 +11,14 @@ class Feedback extends Model
 
     protected $table = 'feedbacks';
     protected $fillable = [
-        'userId',
+        'user_id',
         'text',
         'like',
         'created_at',
     ];
 
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class,'user_id','id');
+    }
 }

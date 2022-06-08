@@ -18,6 +18,12 @@
                     Feedbacks
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route("profiles.index") }}">
+                    <span data-feather="users"></span>
+                    Profiles
+                </a>
+            </li>
 
         </ul>
     </div>

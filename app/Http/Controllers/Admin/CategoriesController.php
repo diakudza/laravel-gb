@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\UpdateCategoriesRequest;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
@@ -14,10 +15,10 @@ class CategoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Category $category)
     {
-        $title ='Category edit';
-        return view('admin.categories',['title' => 'Admin category', 'categories' => Category::all() ]);
+        $title = 'Category edit';
+        return view('admin.Categories.categories', ['title' => 'Admin category', 'categories' => $category->all()]);
     }
 
     /**
@@ -27,61 +28,70 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        $title ='Category edit';
+        $title = 'Category create';
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Category $category)
     {
-        $title ='Category edit';
+        $request->validate(['title' => 'required|string|min:5']);
+        $category->fill($request->all());
+        $category->save();
+        return redirect(route('categories.index'))->with(['success' => 'Added']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Category $category)
     {
-        $title ='Category edit';
-        return view('admin.categoryedit', ['categories' => Category::where(['id'=> $id])->first(), 'title' => $title]);
+        $title = 'Category edit';
+        return view('admin.Categories.categoryedit', ['categories' => $category, 'title' => $title]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $title ='Category edit';
+        $title = 'Category edit';
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCategoriesRequest $request, Category $category)
     {
-        Category::where('id', $id)->update(['title' => $request->title]);
-        return redirect(route('categories.index'))->with(['success'=>'Updated']);
+        $category->update($request->validated());
+        $category->save();
+        return redirect(route('categories.index'))->with(['success' => 'Updated']);
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
+    public function destroy(Category $category)
+    {
+        if (count($category->news)) {
+            dd($category->news);
+            return redirect(route('categories.index'))->with(['alert' => "This category has news"]);
+        }
+        $category->deleteOrFail();
+        return redirect(route('categories.index'))->with(['success' => "Delete"]);
+    }
 }
