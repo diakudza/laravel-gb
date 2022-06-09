@@ -20,7 +20,18 @@ class ParserController extends Controller
 
             NewsParsing::dispatch($link->url, $link->category_id);
         }
-      //  exec('./vendor/bin/sail artisan queue:work');
-      return redirect(route('new.index'))->with('success','All task added in query');
+
+      return redirect(route('newsIndexA'))->with('success','All task added in query');
+    }
+
+    public function startWorker()
+    {
+        if (env('APP_ENV') === 'local') {
+//            $command = 'php /var/www/html/artisan queue:restart ';
+//            $res = shell_exec($command); //for local development
+        }else {
+            shell_exec('php artisan queue:restart'); //for prod
+        }
+        return redirect()->back()->with('success', 'worker up!');
     }
 }

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Inertia\Inertia;
 
 class MainController extends Controller
 {
     public function index()
     {
-        return view('admin.layouts.main',['title' => 'main']);
+        return Inertia::render('Admin/Main');
     }
 }

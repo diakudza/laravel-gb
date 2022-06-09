@@ -11,16 +11,12 @@ class FeedbackController extends Controller
 {
     private $title = 'Feedback';
 
-    /**
-     * Handle the incoming request.
-     * @return \Illuminate\Http\Response
-     */
     public function get(Feedback $feedbacks)
     {
-        return Inertia::render('Feedbacks/feedbacks',
+        return Inertia::render('Public/Feedbacks/feedbacks',
             [
                 'title' => $this->title,
-                'feedbacks' => $feedbacks->with('User')->paginate(15)
+                'feedbacks' => $feedbacks->with('User')->paginate(20)
             ]);
     }
 

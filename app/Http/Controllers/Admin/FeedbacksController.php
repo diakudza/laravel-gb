@@ -4,74 +4,44 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\UpdateFeedbacksRequest;
+use App\Http\Requests\StoreFeedbackRequest;
 use App\Models\Feedback;
 use App\Models\News;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class FeedbacksController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Feedback $feedback)
     {
-        $title ='Feedbacks edit';
-        return view('admin.Feedbacks.feedbacks',['title' => 'Admin Feedbacks', 'feedback' => $feedback->paginate(15) ]);
+        return Inertia::render('Admin/Feedbacks/Feedbacks',['feedbacks' => $feedback->with('User')->paginate(20) ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        $title ='Feedbacks edit';
+        return Inertia::render('Admin/Feedbacks/FeedbackCreate',['users'=> User::select('id','name')->get()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreFeedbackRequest $request, Feedback $feedback)
     {
-        $title ='Feedbacks edit';
+        $request = $request->validated();
+        $feedback->fill($request);
+        $feedback->save();
+        return redirect(route('feedbacks.store'))->with(['success'=>'Added']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Feedback $feedback)
     {
         $title ='Feedbacks edit';
-        return view('admin.Feedbacks.feedbacksedit', ['feedback' => $feedback, 'title' => $title]);
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Feedback $feedback)
     {
-        $title ='Feedbacks edit';
+        return Inertia::render('Admin/Feedbacks/FeedbackEdit', ['feedback' => $feedback, 'users'=> User::select('id','name')->get()]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateFeedbacksRequest $request, Feedback $feedback)
     {
         $validated = $request->validated();
@@ -82,15 +52,9 @@ class FeedbacksController extends Controller
         return redirect(route('feedbacks.index'))->with(['success'=>'Updated']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Feedback $feedback)
     {
         $feedback->delete();
-        return redirect(route('feedbacks.index'))->with(['success' => "Delete"]);
+        return redirect()->back()->with(['success' => "Feedback is deleted"]);
     }
 }

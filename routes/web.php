@@ -50,13 +50,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isadmin'], function () {
     Route::resource('sources', SourceController::class);
     Route::resource('news', AdmNewsController::class)
         ->names([
-            'index' => 'new.index',
-            'show' => 'new.show',
-            'destroy' => 'new.destroy',
-            'store' => 'new.store',
-            'create' => 'new.create',
+            'index' => 'newsIndexA',
+            'edit' => 'newsEditA',
+            'update' => 'newsUpdateA',
+            'destroy' => 'newsDestroyA',
+            'store' => 'newsStoreA',
+            'create' => 'newsCreateA',
         ]);
     Route::get('/parse', [ParserController::class, 'index'])->name('parser');
+    Route::get('/startworker', [ParserController::class, 'startWorker'])->name('startWorker');
 });
 
 Route::get('/auth/{driver}/redirect', [SocialController::class, 'redirect'])
@@ -66,4 +68,3 @@ Route::any('/auth/{driver}/callback', [SocialController::class, 'callback'])
     ->where('driver', '\w+')
     ->name('social.callback');
 
-Route::get('/inertia', \App\Http\Controllers\InertiaController::class);

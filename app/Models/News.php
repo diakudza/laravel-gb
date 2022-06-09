@@ -12,6 +12,11 @@ class News extends Model
 
     protected $fillable = ['title', 'text', 'category_id', 'user_id', 'link', 'source'];
 
+    protected $casts = [
+        'created_at' => 'datetime:d/m/Y',
+        'updated_at' => 'datetime:d/m/Y',
+    ];
+
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);

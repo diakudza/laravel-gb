@@ -6,11 +6,10 @@
                     class="page-item" :key="k"
                     :disabled="link.url === null"
                     :class="{'active': link.active, 'disabled': link.url === null}">
-                    <Link class="page-link"
-
+                    <Link :href="link.url"
+                          class="page-link"
                           v-html="link.label"
-                          :href="link.url"
-                          target="_top">2
+                          target="_top">
                     </Link>
                 </li>
             </ul>

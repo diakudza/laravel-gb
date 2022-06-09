@@ -7,36 +7,20 @@ use App\Http\Requests\Admin\StoreSourceRequest;
 use App\Http\Requests\Admin\UpdateSourceRequest;
 use App\Models\Category;
 use App\Models\Source;
-use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class SourceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Source $sources)
     {
-        return view('admin.Source.sources', ['sources' => $sources->all()]);
+        return Inertia::render('Admin/Source/Sources', ['sources' => $sources->with('category')->paginate(15)]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('admin.Source.sourcecreate');
+        return Inertia::render('Admin/Source/SourceCreate', ['categories' => Category::all()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(StoreSourceRequest $request, Source $source)
     {
         $validated = $request->validated();
@@ -48,35 +32,16 @@ class SourceController extends Controller
         return redirect(route('sources.index'))->with(['success'=>'Added']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Source  $source
-     * @return \Illuminate\Http\Response
-     */
     public function show(Source $source)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Source  $source
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Source $source)
     {
-        return view('admin.Source.sourceedit', ['source' => $source, 'categories' => Category::all()]);
+        return Inertia::render('Admin/Source/SourceEdit', ['source' => $source, 'categories' => Category::all()]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Source  $source
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateSourceRequest $request, Source $source)
     {
         $validated = $request->validated();
@@ -88,12 +53,6 @@ class SourceController extends Controller
         return redirect(route('sources.index'))->with('success', 'Updated');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Source  $source
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Source $source)
     {
         $source->delete();

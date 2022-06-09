@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateFeedbacksRequest extends FormRequest
+class StoreProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,10 @@ class UpdateFeedbacksRequest extends FormRequest
     public function rules()
     {
         return [
-            'text' => 'sometimes|required|string',
-            'user_id' => 'sometimes|required|integer',
-            'like' => 'in:0,1'
+            'name' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:3|confirmed',
+            'avatar' => 'nullable|image'
         ];
     }
 }
