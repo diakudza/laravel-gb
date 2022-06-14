@@ -44,13 +44,20 @@
                         </form>
                     </div>
                     <div v-if="user">
-                        <Link :href="route('logout')" class="navbar-brand d-flex align-items-center">{{ user.name }}
+
+                        <button  @click="changeFormVisible" class="btn navbar-brand d-flex align-items-center">{{ user.name }}
                             <img :src="user.avatar" class="rounded-2" height="40">
-                        </Link>
+                        </button>
+                        <form :class="{'show':formVisible}" class="mydropformmenu dropdown-menu p-4 "  @submit.prevent="submit">
+                            <div class="mb-3">
+                                <Link :href="route('cabinet', {user_id: user.id})" class="d-flex align-items-center">Cabinet </Link>
+                            </div>
+                            <div class="mb-3">
+                                <Link :href="route('logout')" class="d-flex align-items-center">SingOut </Link>
+                            </div>
+                        </form>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </header>

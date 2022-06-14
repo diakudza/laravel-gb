@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\SourceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SocialController;
+use App\Http\Controllers\UserCabinetController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\NewsController as AdmNewsController;
 use App\Http\Controllers\Admin\MainController as AdmMainController;
@@ -39,6 +40,8 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/registration', [LoginController::class, 'registration'])->name('registration');
 Route::get('/registration', [LoginController::class, 'registrationForm'])->name('registrationform');
+Route::get('/cabinet/{user_id}', [UserCabinetController::class, 'index'])->name('cabinet')->middleware('isaccess');
+Route::put('/cabinet/{user_id}', [UserCabinetController::class, 'edit'])->name('useredit')->middleware('isaccess');
 
 Route::resource('news', NewsController::class);
 

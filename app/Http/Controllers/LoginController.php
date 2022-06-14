@@ -59,7 +59,7 @@ class LoginController extends Controller
             'email' => $request->input('email'),
             'phone' => $request->input('phone'),
             'password' => Hash::make($request->input('password')),
-            'avatar' => $vaidated['avatar'] && ''
+            'avatar' => $vaidated['avatar'] ?? ''
         ]);
         Auth::login($user);
         return redirect()->home()->with('success',  "User $request->name was register!");
