@@ -9,7 +9,7 @@ class News extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'text', 'category_id'];
+    protected $fillable = ['title', 'text', 'category_id', 'user_id', 'link', 'source'];
 
     public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

@@ -88,9 +88,9 @@ class FeedbacksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Feedback $feedback, int $id)
+    public function destroy(Feedback $feedback)
     {
-        $feedback->find($id)->delete();
-        return redirect(route('feedbacks.index'))->with(['success' => "$id Delete"]);
+        $feedback->delete();
+        return redirect(route('feedbacks.index'))->with(['success' => "Delete"]);
     }
 }

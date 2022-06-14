@@ -25,7 +25,7 @@ class StoreFeedbackRequest extends FormRequest
     {
         return [
             'text' => ['required', 'string', 'min:10'],
-            'user_id' => ['integer']
+            'user_id' => ['requires', 'integer', 'min:1']
         ];
     }
 }

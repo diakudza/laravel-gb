@@ -24,7 +24,16 @@
                     Profiles
                 </a>
             </li>
+            <li class="nav-item">
+                <form action=" {{route('parser') }}" method="post">
+                    @csrf
+                    <input type="text" name="url" value="https://news.yandex.ru/music.rss">
+                    <button class="nav-link" type='submit' href="{{ route("parser") }}">
+                        Parser
+                    </button>
+                </form>
 
+            </li>
         </ul>
     </div>
 
