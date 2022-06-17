@@ -4,13 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
-use App\Helpers\LocalEmail;
-use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Inertia\Inertia;
-use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -38,27 +35,31 @@ class LoginController extends Controller
             'email' => $request->email,
             'password' => $request->password
         ])) {
-//            if(Auth::user()->role == 1) {
-//                return redirect(route('main'));
-//            }
+
             return redirect()->home()->with(['success'=> 'Hello!']);
         }
         return redirect()->back()->with(['alert'=> 'Wrong login or password']);
     }
 
-    public function registrationForm (Request $request)
+    public function registrationForm ()
     {
-        return Inertia::render('singup', ['title' => 'Register']);
-       // return view('registration',['title' => 'Registration new user']);
+        return Inertia::render('Public/Singup', ['title' => 'Register']);
     }
     public function registration (RegistrationRequest $request)
     {
+
+        $vaidated = $request->validated();
+        if ($request->hasFile('avatar')) {
+            $date = date('Y-m-d');
+            $vaidated['avatar'] = $request->file('avatar')->store("img/{$date}");
+        }
 
         $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'phone' => $request->input('phone'),
             'password' => Hash::make($request->input('password')),
+            'avatar' => $vaidated['avatar'] ?? ''
         ]);
         Auth::login($user);
         return redirect()->home()->with('success',  "User $request->name was register!");

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class News extends Model
 {
@@ -11,7 +12,12 @@ class News extends Model
 
     protected $fillable = ['title', 'text', 'category_id', 'user_id', 'link', 'source'];
 
-    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    protected $casts = [
+        'created_at' => 'datetime:d/m/Y',
+        'updated_at' => 'datetime:d/m/Y',
+    ];
+
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }

@@ -26,7 +26,7 @@ class UpdateNewsRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'min:10'],
             'text' => ['required', 'string', 'min:20'],
-            'category' => ['required','exists:categories,id']
+            'category_id' => ['required','exists:categories,id']
         ];
     }
 }

@@ -10,6 +10,12 @@ class Feedback extends Model
     use HasFactory;
 
     protected $table = 'feedbacks';
+
+    protected $casts = [
+        'created_at' => 'datetime:d/m/Y',
+        'updated_at' => 'datetime:d/m/Y',
+    ];
+
     protected $fillable = [
         'user_id',
         'text',

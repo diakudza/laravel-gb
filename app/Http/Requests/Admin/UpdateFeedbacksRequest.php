@@ -25,7 +25,7 @@ class UpdateFeedbacksRequest extends FormRequest
     {
         return [
             'text' => 'sometimes|required|string',
-            'user_id' => 'sometimes|required|integer|exists:user,user_id',
+            'user_id' => 'sometimes|required|integer',
             'like' => 'in:0,1'
         ];
     }

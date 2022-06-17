@@ -3,77 +3,44 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreCategoryRequest;
 use App\Http\Requests\Admin\UpdateCategoriesRequest;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CategoriesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Category $category)
     {
-        $title = 'Category edit';
-        return view('admin.Categories.categories', ['title' => 'Admin category', 'categories' => $category->all()]);
+        return Inertia::render('Admin/Categories/Categories', [
+            'categories' => $category->paginate(15),
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        $title = 'Category create';
+        return Inertia::render('Admin/Categories/CategoryCreate');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request, Category $category)
+    public function store(StoreCategoryRequest $request, Category $category)
     {
-        $request->validate(['title' => 'required|string|min:5']);
-        $category->fill($request->all());
+        $category->fill($request->validated());
         $category->save();
         return redirect(route('categories.index'))->with(['success' => 'Added']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
+    public function show()
     {
-        $title = 'Category edit';
-        return view('admin.Categories.categoryedit', ['categories' => $category, 'title' => $title]);
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        $title = 'Category edit';
+        return Inertia::render('Admin/Categories/CategoryEdit',['category' => $category]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function update(UpdateCategoriesRequest $request, Category $category)
     {
         $category->update($request->validated());
@@ -81,10 +48,6 @@ class CategoriesController extends Controller
         return redirect(route('categories.index'))->with(['success' => 'Updated']);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Category $category)
     {
         if (count($category->news)) {

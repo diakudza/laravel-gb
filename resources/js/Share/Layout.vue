@@ -11,8 +11,8 @@
 
 <script>
 
-import HeaderTop from "../components/HeaderTop"
-import Footer from "../components/Footer";
+import HeaderTop from "../Pages/Public/components/HeaderTop"
+import Footer from "../Pages/Public/components/Footer";
 import Error from "./Error";
 export default {
     name: "Layout",

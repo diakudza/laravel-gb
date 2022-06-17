@@ -4,9 +4,11 @@ use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\FeedbacksController;
 use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Admin\ProfilesController;
+use App\Http\Controllers\Admin\SourceController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SocialController;
+use App\Http\Controllers\UserCabinetController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\NewsController as AdmNewsController;
 use App\Http\Controllers\Admin\MainController as AdmMainController;
@@ -38,6 +40,8 @@ Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/registration', [LoginController::class, 'registration'])->name('registration');
 Route::get('/registration', [LoginController::class, 'registrationForm'])->name('registrationform');
+Route::get('/cabinet/{user_id}', [UserCabinetController::class, 'index'])->name('cabinet')->middleware('isaccess');
+Route::put('/cabinet/{user_id}', [UserCabinetController::class, 'edit'])->name('useredit')->middleware('isaccess');
 
 Route::resource('news', NewsController::class);
 
@@ -46,15 +50,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isadmin'], function () {
     Route::resource('categories', CategoriesController::class);
     Route::resource('feedbacks', FeedbacksController::class);
     Route::resource('profiles', ProfilesController::class);
+    Route::resource('sources', SourceController::class);
     Route::resource('news', AdmNewsController::class)
         ->names([
-            'index' => 'new.index',
-            'show' => 'new.show',
-            'destroy' => 'new.destroy',
-            'store' => 'new.store',
-            'create' => 'new.create',
+            'index' => 'newsIndexA',
+            'edit' => 'newsEditA',
+            'update' => 'newsUpdateA',
+            'destroy' => 'newsDestroyA',
+            'store' => 'newsStoreA',
+            'create' => 'newsCreateA',
         ]);
-    Route::post('/parse', [ParserController::class, 'index'])->name('parser');
+    Route::get('/parse', [ParserController::class, 'index'])->name('parser');
+    Route::get('/startworker', [ParserController::class, 'startWorker'])->name('startWorker');
 });
 
 Route::get('/auth/{driver}/redirect', [SocialController::class, 'redirect'])
@@ -64,4 +71,3 @@ Route::any('/auth/{driver}/callback', [SocialController::class, 'callback'])
     ->where('driver', '\w+')
     ->name('social.callback');
 
-Route::get('/inertia', \App\Http\Controllers\InertiaController::class);
