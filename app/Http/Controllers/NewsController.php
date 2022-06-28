@@ -13,10 +13,13 @@ class NewsController extends Controller
 
     public function index(News $news)
     {
+        $comments = $news->comments();
+
         return Inertia::render('Public/News/news',
             [
                 'title' => $this->title,
-                'news' => $news->with('Category')->paginate(15)
+
+                'news' => $news->with(['Category','Comments','Comments.user'])->paginate(15)
             ]);
     }
 
