@@ -13,7 +13,13 @@
         <div class="mt-2">
             <Pagination :links="news.links" />
         </div>
-        <NewsCart @destroy="destroy" :news="news" :user="$attrs.auth.user"/>
+        <NewsCart v-for="item in news.data"
+                  :key="item.id"
+                  @destroy="destroy"
+                  @editFeedback="editFeedback"
+                  :news="item"
+                  :user="$attrs.auth.user"
+        />
 
     </div>
 </template>

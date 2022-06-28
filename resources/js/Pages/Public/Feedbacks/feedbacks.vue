@@ -13,7 +13,6 @@
         <div class="mt-2">
             <Pagination :links="feedbacks.links" />
         </div>
-
         <FeedbackCart v-for="item in feedbacks.data"
                       :key="item.id"
                       @destroy="destroy"

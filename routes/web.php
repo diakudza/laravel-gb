@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\CategoriesController;
+use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\FeedbacksController;
 use App\Http\Controllers\Admin\MainController as AdmMainController;
 use App\Http\Controllers\Admin\NewsController as AdmNewsController;
@@ -49,6 +50,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'isadmin'], function () {
     Route::resource('categories', CategoriesController::class);
     Route::resource('feedbacks', FeedbacksController::class);
     Route::resource('profiles', ProfilesController::class);
+    Route::resource('comments', CommentController::class);
     Route::resource('sources', SourceController::class);
     Route::resource('news', AdmNewsController::class)
         ->names([
