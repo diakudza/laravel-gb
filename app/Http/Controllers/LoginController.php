@@ -21,7 +21,7 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->home()->with(['success'=> 'You are logout!']);;
+        return redirect()->home()->with(['success'=> 'You are logout!','showmodal' => false]);;
     }
 
     public function login(Request $request)
@@ -47,7 +47,6 @@ class LoginController extends Controller
     }
     public function registration (RegistrationRequest $request)
     {
-
         $vaidated = $request->validated();
         if ($request->hasFile('avatar')) {
             $date = date('Y-m-d');

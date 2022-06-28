@@ -1,20 +1,20 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\FeedbacksController;
+use App\Http\Controllers\Admin\MainController as AdmMainController;
+use App\Http\Controllers\Admin\NewsController as AdmNewsController;
 use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Admin\ProfilesController;
 use App\Http\Controllers\Admin\SourceController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MainController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserCabinetController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\NewsController as AdmNewsController;
-use App\Http\Controllers\Admin\MainController as AdmMainController;
-use App\Http\Controllers\MainController;
-use App\Http\Controllers\AboutController;
-use App\Http\Controllers\FeedbackController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +35,6 @@ Route::post('/feedbacks', [FeedbackController::class, 'store'])->name('feedbacks
 Route::put('/feedbacks/{feedback}', [FeedbackController::class, 'update'])->name('feedbacksUpdate');
 Route::delete('/feedbacks/{feedback}', [FeedbackController::class, 'destroy'])->name('feedbacksDestroy');
 
-Route::get('/login', [LoginController::class, 'form'])->name('loginform');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/registration', [LoginController::class, 'registration'])->name('registration');

@@ -24,7 +24,7 @@
                         <Link :href="route('registrationform')" class="btn navbar-brand d-flex align-items-center">SingUp</Link>
                         <button  @click="changeFormVisible" class="btn navbar-brand d-flex align-items-center">SingIn
                         </button>
-                        <form :class="{'show':formVisible}" class="mydropform dropdown-menu p-4 "  @submit.prevent="submit">
+                        <form :class="{'show':formVisible}" class="mydropform dropdown-menu p-4 " @focusout="hideForm" @submit.prevent="submit">
 
                             <div class="mb-3">
                                 <label for="exampleDropdownFormEmail2" class="form-label">Email address</label>
@@ -33,7 +33,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="exampleDropdownFormPassword2" class="form-label">Password</label>
-                                <input type="password" v-model="form.password" class="form-control" id="exampleDropdownFormPassword2"
+                                <input type="password" v-model="form.password" class="form-control" :class="{'alert-danger': this.$attrs.flash }" id="exampleDropdownFormPassword2"
                                        name="password"
                                        placeholder="Password">
                             </div>
@@ -90,7 +90,12 @@ export default {
     methods: {
         changeFormVisible() {
             this.formVisible = !this.formVisible
+        },
+        hideForm() {
+            this.formVisible = false
         }
-    }
+
+    },
+
 }
 </script>

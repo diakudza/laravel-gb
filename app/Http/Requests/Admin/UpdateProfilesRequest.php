@@ -27,7 +27,7 @@ class UpdateProfilesRequest extends FormRequest
             'name' => 'sometimes|required|string',
             'email' => 'sometimes|required|email',
             'password' => 'sometimes|required|confirmed',
-            'phone' => 'sometimes',
+            'phone' => 'sometimes|required',
             'avatar' => 'sometimes|nullable|image|mimes:jpg,png,gif,jpeg',
             'role' => 'sometimes|integer|between:0,2'
         ];

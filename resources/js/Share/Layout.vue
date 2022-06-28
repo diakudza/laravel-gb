@@ -20,7 +20,7 @@ export default {
         HeaderTop,
         Footer,
         Error
-    }
+    },
 }
 
 </script>
