@@ -15,40 +15,23 @@ class GbTest extends TestCase
     public function test_main()
     {
         $response = $this->get('/');
-
         $response->assertStatus(200);
     }
     public function test_news()
     {
         $response = $this->get('/news');
-
         $response->assertStatus(200);
     }
     public function test_feedback()
     {
-        $response = $this->get('/feedback');
-
+        $response = $this->get('/feedbacks');
         $response->assertStatus(200);
     }
-    public function test_login()
+    public function test_about()
     {
-        $response = $this->get('/login');
-
+        $response = $this->get('/about');
         $response->assertStatus(200);
     }
 
-    public function test_admin()
-    {
-        $response = $this->get('/admin');
-
-        $response->assertStatus(200);
-    }
-
-    public function test_admin_news()
-    {
-        $response = $this->get('/admin/news');
-
-        $response->assertStatus(200);
-    }
 
 }
