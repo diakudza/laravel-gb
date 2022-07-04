@@ -1,11 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoriesController;
-use App\Http\Controllers\Admin\CommentController;
+use App\Http\Controllers\Admin\CommentController as AdmComment;
 use App\Http\Controllers\Admin\FeedbacksController;
 use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Admin\ProfilesController;
 use App\Http\Controllers\Admin\SourceController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SocialController;
@@ -45,13 +46,14 @@ Route::get('/cabinet/{user_id}', [UserCabinetController::class, 'index'])->name(
 Route::put('/cabinet/{user_id}', [UserCabinetController::class, 'edit'])->name('useredit')->middleware('isaccess');
 
 Route::resource('news', NewsController::class);
+Route::resource('usercomments', CommentController::class);
 
 Route::group(['prefix' => 'admin', 'middleware' => 'isadmin'], function () {
     Route::get('/', [AdmMainController::class, 'index'])->name('main');
     Route::resource('categories', CategoriesController::class);
     Route::resource('feedbacks', FeedbacksController::class);
     Route::resource('profiles', ProfilesController::class);
-    Route::resource('comments', CommentController::class);
+    Route::resource('comments', AdmComment::class);
     Route::resource('sources', SourceController::class);
     Route::resource('news', AdmNewsController::class)
         ->names([

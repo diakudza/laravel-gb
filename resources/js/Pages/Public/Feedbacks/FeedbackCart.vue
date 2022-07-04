@@ -9,7 +9,11 @@
         <div class="card-body">
             <p v-if="!showEditValue" class="card-title pricing-card-title">{{ feedback.text }}</p>
             <div v-if="showEditValue">
-                <input v-model="text" type="text" style="width:500px;" name="text" :value="text">
+                <input v-model="text"
+                       type="text"
+                       style="width:500px;"
+                       name="text"
+                >
                 <button class="btn btn-green" @click="editFeedback()">Save</button>
             </div>
         </div>
