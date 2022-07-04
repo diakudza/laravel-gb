@@ -17,6 +17,11 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserCabinetController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\NewsController as AdmNewsController;
+use App\Http\Controllers\Admin\MainController as AdmMainController;
+use App\Http\Controllers\MainController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\FeedbackController;
 
 /*
 |--------------------------------------------------------------------------
