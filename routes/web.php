@@ -1,18 +1,13 @@
 <?php
 
-use App\Http\Controllers\AboutController;
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\CommentController as AdmComment;
 use App\Http\Controllers\Admin\FeedbacksController;
-use App\Http\Controllers\Admin\MainController as AdmMainController;
-use App\Http\Controllers\Admin\NewsController as AdmNewsController;
 use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Admin\ProfilesController;
 use App\Http\Controllers\Admin\SourceController;
-use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\MainController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\UserCabinetController;
