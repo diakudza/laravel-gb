@@ -11,7 +11,11 @@
             </div>
             <input type="text" class="form-control" v-model="form.name" name="name">
             <input type="text" class="form-control" v-model="form.phone" name="phone">
-            <input type="file" class="form-control" v-model="form.avatar" name="avatar"  @input="form.avatar = $event.target.files[0]">
+            <input type="file"
+                   class="form-control"
+
+                   name="avatar"
+                   @input="form.avatar = $event.target.files[0]">
             <button type="submit" :disabled="form.processing" class="btn ">Submit</button>
         </form>
     </div>
